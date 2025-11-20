@@ -55,7 +55,7 @@ This project is a Student Record System in C. The team is divided into 15 roles.
 
 ### For All Team Members:
 1. **Read** `c_tutorial.MD` (if new to C), then `student_record_commented.c` (learn structure).
-2. **Study Person 1's `main` function** in `student_record.c` carefully.
+2. **Study** `student_record.c` carefully.
 3. **For your assigned task**: Read both implementations (yours and your pair's), understand the differences.
 4. **Prepare ONE slide** covering:
    - Function name and what it does
