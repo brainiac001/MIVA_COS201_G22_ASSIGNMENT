@@ -1,7 +1,7 @@
 # Student Record System – Project Documentation
 
 **Group:**  Group 22  
-**Course:** Programming Fundamentals (C)  
+**Course:** COS201 Computer Programming 1 
 
 ---
 
