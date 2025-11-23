@@ -3,8 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 
-//  Student Record System program to store students (name, roll number, marks)
-
 #define MAX_NAME_LENGTH 50
 #define PASSING_MARKS 40
 
@@ -36,6 +34,7 @@ void saveToFile(const StudentRecordSystem *records);
 void loadFromFile(StudentRecordSystem *records);
 void displayMenu();
 void clearInputBuffer();
+int confirmAction(const char *actionDescription);
 
 //main point of entry and runs the CLI loop
 int main() {
@@ -68,37 +67,52 @@ int main() {
         
         switch (choice) {
             case 1:
+                if (!confirmAction("add a new student")) break;
                 addStudent(&records);
                 break;
             case 2:
+                if (!confirmAction("display all students")) break;
                 displayAllStudents(&records);
                 break;
             case 3:
+                if (!confirmAction("search for a student")) break;
                 searchStudent(&records);
                 break;
             case 4:
+                if (!confirmAction("modify student records")) break;
                 modifyStudent(&records);
                 break;
             case 5:
+                if (!confirmAction("remove a student")) break;
                 removeStudent(&records);
                 break;
             case 6:
+                if (!confirmAction("calculate average marks")) break;
                 calculateAverageMarks(&records);
                 break;
             case 7:
+                if (!confirmAction("sort students by marks in ascending order")) break;
                 sortStudents(&records, 1); // Ascending
                 break;
             case 8:
+                if (!confirmAction("sort students by marks in descending order")) break;
                 sortStudents(&records, 0); // Descending
                 break;
             case 9:
+                if (!confirmAction("save records to a file")) break;
                 saveToFile(&records);
                 break;
             case 10:
+                if (!confirmAction("load records from a file")) break;
                 loadFromFile(&records);
                 break;
             case 11:
-                printf("Thank you for using the Student Record System, %s! Goodbye!\n", userName);
+                if (confirmAction("exit the program")) {
+                    printf("Thank you for using the Student Record System, %s! Goodbye!\n", userName);
+                } else {
+                    /* User cancelled exit; stay in the menu loop. */
+                    choice = 0;
+                }
                 break;
             default:
                 printf("Invalid choice! Please try again.\n");
@@ -156,8 +170,8 @@ void displayMenu() {
     printf("6. Calculate Average Marks\n");
     printf("7. Sort Students by Marks (Ascending)\n");
     printf("8. Sort Students by Marks (Descending)\n");
-    printf("9. Save Records to File\n");
-    printf("10. Load Records from File\n");
+    printf("9. Save Records to a Comma-Separated Text File (CSV-Style)\n");
+    printf("10. Load Records from a Comma-Separated Text File (CSV-Style)\n");
     printf("11. Exit\n");
     printf("----------------------------------------\n");
 }
@@ -512,6 +526,20 @@ void loadFromFile(StudentRecordSystem *records) {
     if (records->count > 0) {
         displayAllStudents(records);
     }
+}
+
+int confirmAction(const char *actionDescription) {
+    char response[8];
+    printf("Are you sure you want to %s? Press y/Y to continue, n/N to cancel: ", actionDescription);
+    if (fgets(response, sizeof(response), stdin) == NULL) {
+        printf("Input error. Cancelling action.\n");
+        return 0;
+    }
+    if (response[0] == 'y' || response[0] == 'Y') {
+        return 1;
+    }
+    printf("Action cancelled.\n");
+    return 0;
 }
 
 void clearInputBuffer() {

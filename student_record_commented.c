@@ -101,6 +101,9 @@ void displayMenu();
 /* Utility: read and discard remaining characters on stdin until newline/EOF. */
 void clearInputBuffer();
 
+/* Ask the user to confirm an action before it runs (returns 1 = yes, 0 = no). */
+int confirmAction(const char *actionDescription);
+
 
 
 // main — program entry point
@@ -161,42 +164,71 @@ int main()
         clearInputBuffer(); /* remove leftover newline after scanf */
 
         /* Dispatch based on the user's menu choice. We pass &records to each
-         * function so they operate on the same in-memory container. */
+         * function so they operate on the same in-memory container.
+         * Before running any action (except Exit), we ask the user to confirm. */
         switch (choice)
         {
         case 1:
+            if (!confirmAction("add a new student"))
+                break;
             addStudent(&records);
             break;
         case 2:
+            if (!confirmAction("display all students"))
+                break;
             displayAllStudents(&records);
             break;
         case 3:
+            if (!confirmAction("search for a student"))
+                break;
             searchStudent(&records);
             break;
         case 4:
+            if (!confirmAction("modify student records"))
+                break;
             modifyStudent(&records);
             break;
         case 5:
+            if (!confirmAction("remove a student"))
+                break;
             removeStudent(&records);
             break;
         case 6:
+            if (!confirmAction("calculate average marks"))
+                break;
             calculateAverageMarks(&records);
             break;
         case 7:
+            if (!confirmAction("sort students by marks in ascending order"))
+                break;
             sortStudents(&records, 1); /* ascending */
             break;
         case 8:
+            if (!confirmAction("sort students by marks in descending order"))
+                break;
             sortStudents(&records, 0); /* descending */
             break;
         case 9:
+            if (!confirmAction("save records to a file"))
+                break;
             saveToFile(&records);
             break;
         case 10:
+            if (!confirmAction("load records from a file"))
+                break;
             loadFromFile(&records);
             break;
         case 11:
-            /* Graceful exit path: user requested to quit. */
-            printf("Thank you for using the Student Record System, %s! Goodbye!\n", userName);
+            /* Graceful exit path: user requested to quit. We still confirm before exiting. */
+            if (confirmAction("exit the program"))
+            {
+                printf("Thank you for using the Student Record System, %s! Goodbye!\n", userName);
+            }
+            else
+            {
+                /* User cancelled exit; reset choice so the loop continues. */
+                choice = 0;
+            }
             break;
         default:
             printf("Invalid choice! Please try again.\n");
@@ -299,87 +331,7 @@ void displayMenu()
     printf("----------------------------------------\n");
 }
 
-/* ------------------------------------------------------------------------- */
-/* addStudent - interactively collect student details and append to array    */
-/* ------------------------------------------------------------------------- */
-void addStudent(StudentRecordSystem *records)
-{
-    /* If array is full, grow it by doubling capacity. This keeps appends
-     * amortized O(1) while avoiding frequent small reallocations.
-     */
-    if (records->count >= records->capacity)
-    {
-        records->capacity *= 2; /* double capacity */
-
-        /* Resize memory block; realloc returns NULL on failure but leaves
-         * the original pointer intact, so we check result carefully.
-         */
-        records->students = (Student *)realloc(records->students, records->capacity * sizeof(Student));
-        if (records->students == NULL)
-        {
-            printf("Memory allocation failed!\n");
-            return; /* leave program running, but cannot add the student */
-        }
-    }
-
-    Student newStudent; /* temporary storage for inputs */
-
-    printf("\n--- Add New Student ---\n");
-
-    /* Read name using fgets to avoid buffer overflow. Then strip newline. */
-    printf("Enter student name: ");
-    /* fgets reads up to sizeof(newStudent.name)-1 characters and stores a
-     * terminating '\0'. It also keeps the trailing newline if it fits.
-     * strcspn finds the index of the newline so we can replace it with '\0'
-     * (this is equivalent to trimming the trailing newline).
-     */
-    fgets(newStudent.name, sizeof(newStudent.name), stdin); // read name safely into buffer (includes '\n' if present)
-    newStudent.name[strcspn(newStudent.name, "\n")] = '\0'; // strcspn finds newline position; we overwrite it with '\0' to trim it
-
-    /* Read roll number; validate that it's a positive integer. */
-    printf("Enter roll number: ");
-    /* Loop until we successfully read a positive integer. Condition explained:
-     * - scanf(...) != 1 : scanf failed to parse an integer (user typed letters)
-     * - newStudent.rollNumber <= 0 : the parsed integer isn't a positive ID
-     * In either case we clear the input buffer and ask again.
-     */
-    while (scanf("%d", &newStudent.rollNumber) != 1 || newStudent.rollNumber <= 0)
-    {
-        /* We loop until scanf successfully parses one integer and it's positive.
-         * scanf returns the number of items parsed (1 on success). If it fails
-         * we clear stdin and prompt again.
-         */
-        printf("Invalid roll number! Please enter a positive integer: ");
-        clearInputBuffer(); /* discard bad input so the next scanf sees fresh input */
-    }
-    clearInputBuffer(); /* remove leftover newline */
-
-    /* Ensure roll number uniqueness by scanning existing records. */
-    for (int i = 0; i < records->count; i++)
-    {
-        if (records->students[i].rollNumber == newStudent.rollNumber)
-        {
-            printf("Error: Roll number %d already exists!\n", newStudent.rollNumber);
-            return; /* do not add duplicate */
-        }
-    }
-
-    /* Read marks, validating the numeric range 0-100. */
-    printf("Enter marks: ");
-    while (scanf("%f", &newStudent.marks) != 1 || newStudent.marks < 0 || newStudent.marks > 100)
-    {
-        // scanf returns number of items converted; if it's not 1 the parse failed
-        printf("Invalid marks! Please enter a value between 0 and 100: ");
-        clearInputBuffer(); // discard invalid input so next scanf reads fresh data
-    }
-    clearInputBuffer();
-
-    /* Append the validated student to the array and increment count. */
-    records->students[records->count] = newStudent;
-    records->count++;
-
-    printf("Student added successfully!\n");
-}
+m
 
 /* ------------------------------------------------------------------------- */
 /* displayAllStudents - print the stored students in a human-friendly table  */
@@ -677,8 +629,7 @@ void sortStudents(StudentRecordSystem *records, int ascending)
 }
 
 /* ------------------------------------------------------------------------- */
-/* saveToFile - write CSV (name,roll,marks,status) to specified file         */
-/* ------------------------------------------------------------------------- */
+i/* ------------------------------------------------------------------------- */
 void saveToFile(const StudentRecordSystem *records)
 {
     if (records->count == 0)
@@ -819,6 +770,29 @@ void loadFromFile(StudentRecordSystem *records)
     {
         displayAllStudents(records);
     }
+}
+
+/* ------------------------------------------------------------------------- */
+/* confirmAction - ask user to confirm an operation before running it        */
+/* Returns 1 if user confirms with y/Y, otherwise returns 0 and cancels.     */
+/* ------------------------------------------------------------------------- */
+int confirmAction(const char *actionDescription)
+{
+    char response[8];
+    printf("Are you sure you want to %s? Press y/Y to continue, n/N to cancel: ", actionDescription);
+    if (fgets(response, sizeof(response), stdin) == NULL)
+    {
+        printf("Input error. Cancelling action.\n");
+        return 0;
+    }
+
+    if (response[0] == 'y' || response[0] == 'Y')
+    {
+        return 1;
+    }
+
+    printf("Action cancelled.\n");
+    return 0;
 }
 
 /* ------------------------------------------------------------------------- */
