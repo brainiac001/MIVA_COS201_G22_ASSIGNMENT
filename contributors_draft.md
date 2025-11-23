@@ -1,7 +1,7 @@
 # Project Contributors — Team Task Assignments & Presentation Prep
 
 ## Team Overview
-This project is a Student Record System in C. The team is divided into 15 roles. Each pair of persons implements the same function; the best version is selected. All persons review the group leader's work to understand the architecture. Two shared reviewers per task pair ensure quality.
+This project is a Student Record System in C. The team is divided into various roles. Each pair of persons implements the same function; the best version is selected. All persons review the group leader's work to understand the architecture. Two shared reviewers per task pair ensure quality.
 
 ---
 
