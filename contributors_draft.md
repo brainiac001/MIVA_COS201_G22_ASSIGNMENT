@@ -7,18 +7,18 @@ This project is a Student Record System in C. The team is divided into various r
 
 ## Task Assignments
 
-| Person | Task | Function | Reviewers |
-|--------|------|----------|-----------|
-| **1** | **Group Leader ** | Architecture and core building blocks: `main` (CLI orchestration, menu loop, confirmation prompts, memory cleanup, consume trailing stdin, allocate array), data model structs (`Student`, `StudentRecordSystem`), `displayMenu`, `displayWelcomeMessage`, `clearInputBuffer`, `initializeSystem`, `confirmAction` | Everyone reviews |
-| 2, 3 | Add Student | `addStudent` (input validation, duplicate detection, resize) | Persons 4, 5 |
-| 4, 5 | Display All Students | `displayAllStudents` (format table, compute PASS/FAIL) | Persons 6, 7 |
-| 6, 7 | Search Student | `searchStudent` (locate, display, not-found handling) | Persons 8, 9 |
-| 8, 9 | Modify Student | `modifyStudent` (find, partial updates, preserve blanks) | Persons 10, 11 |
-| 10, 11 | Remove Student | `removeStudent` (locate, shift array, decrement count) | Persons 12, 2 |
-| 12, 2* | Calculate Average | `calculateAverageMarks` (sum, average, display) | Persons 3*, 4* |
-| 3*, 4* | Sort Students | `sortStudents`, `compareMarks` (qsort, ascending/descending) | Persons 5*, 6* |
-| 5*, 6* | Save to File | `saveToFile` (CSV export, headers, pass/fail status) | Persons 8*, 7* |
-| 7*, 8* | Load from File | `loadFromFile` (CSV parsing, array resize, data population) | Persons 9*, 10* |
+| Person(s) | Task | Function | Reviewers |
+|-----------|------|----------|-----------|
+| **Livingstone Joseph Oboch** | **Group Leader** | Architecture and core building blocks: `main` (CLI orchestration, menu loop, confirmation prompts, memory cleanup, consume trailing stdin, allocate array), data model structs (`Student`, `StudentRecordSystem`), `displayMenu`, `displayWelcomeMessage`, `clearInputBuffer`, `initializeSystem`, `confirmAction` | Everyone reviews |
+| Idowu Joshua Oluwadamilare, Olalere Isaiah | Add Student | `addStudent` (input validation, duplicate detection, resize) | Raheem Mujeeb Olamilekan, Akinniyi Adeleke Solomon |
+| Raheem Mujeeb Olamilekan, Akinniyi Adeleke Solomon | Display All Students | `displayAllStudents` (format table, compute PASS/FAIL) | Cherechi Udensi, Daniel Abiodun |
+| Cherechi Udensi, Daniel Abiodun | Search Student | `searchStudent` (locate, display, not-found handling) | Ayodeji Victor Adeyanju, Augustine Adolphus Fubara |
+| Ayodeji Victor Adeyanju, Augustine Adolphus Fubara | Modify Student | `modifyStudent` (find, partial updates, preserve blanks) | Idowu Joshua Oluwadamilare, Olalere Isaiah |
+| Idowu Joshua Oluwadamilare, Raheem Mujeeb Olamilekan | Remove Student | `removeStudent` (locate, shift array, decrement count) | Cherechi Udensi, Daniel Abiodun |
+| Daniel Abiodun, Ayodeji Victor Adeyanju | Calculate Average | `calculateAverageMarks` (sum, average, display) | Raheem Mujeeb Olamilekan, Augustine Adolphus Fubara |
+| Olalere Isaiah, Augustine Adolphus Fubara | Sort Students | `sortStudents`, `compareMarks` (qsort, ascending/descending) | Idowu Joshua Oluwadamilare, Raheem Mujeeb Olamilekan |
+| Idowu Joshua Oluwadamilare, Cherechi Udensi | Save to File | `saveToFile` (CSV export, headers, pass/fail status) | Augustine Adolphus Fubara, Daniel Abiodun |
+| Raheem Mujeeb Olamilekan, Daniel Abiodun | Load from File | `loadFromFile` (CSV parsing, array resize, data population) | Olalere Isaiah, Ayodeji Victor Adeyanju |
 
 *Alt task (fallback if primary task completed early)
 
@@ -29,7 +29,7 @@ This project is a Student Record System in C. The team is divided into various r
 We organised the work in **phases**, so that functions which are more independent were designed and implemented first, and functions that depend on others came later.
 
 1. **Phase 0 – Leader skeleton and core utilities**  
-   - Person 1 (leader) defines the data structures and core utilities that everything else depends on: `Student`, `StudentRecordSystem`, `initializeSystem`, `main`, `displayMenu`, `displayWelcomeMessage`, `clearInputBuffer`, and `confirmAction`.
+   - Livingstone Joseph Oboch (Group Leader) defines the data structures and core utilities that everything else depends on: `Student`, `StudentRecordSystem`, `initializeSystem`, `main`, `displayMenu`, `displayWelcomeMessage`, `clearInputBuffer`, and `confirmAction`.
 
 2. **Phase 1 – Core data creation**  
      - `addStudent` (validated inserts, duplicate check, capacity checks).  
@@ -92,7 +92,7 @@ We organised the work in **phases**, so that functions which are more independen
 - Check for input validation, memory safety, edge cases.
 - Provide feedback to your pair.
 
-### For Person 1 (Group Leader):
+### For Livingstone Joseph Oboch (Group Leader):
 - Ensure all final implementations are integrated and tested.
 - Coordinate team presentations and demo rehearsal.
 - Present the architecture and integrated demo first (add → load → display → sort → save → exit).
@@ -304,7 +304,7 @@ To keep everyone aligned, the group leader proposed this implementation plan:
      - How confirmation (`confirmAction`) and input handling work.
 
 2. **Implement your assigned function in isolation**  
-   - Each pair (e.g., Persons 4 and 5 for `addStudent`) copies the function signature from the skeleton and implements it inside their own local file or branch.
+   - Each pair (e.g., Idowu Oluwadamilare and Olalere Isaiah for `addStudent`) copies the function signature from the skeleton and implements it inside their own local file or branch.
    - They focus on:
      - Correct logic.
      - Input validation and error messages.
@@ -346,7 +346,7 @@ To keep everyone aligned, the group leader proposed this implementation plan:
 
 ## Contacts
 
-- **Person 1 (Leader):** Architecture, integration, rehearsal coordination.
+- **Livingstone Joseph Oboch (Group Leader):** Architecture, integration, rehearsal coordination.
 - **Your 2 Shared Reviewers:** Code quality, testing, demo validation.
 - **Everyone:** Prepare slides, study the code, participate in rehearsal.
 
