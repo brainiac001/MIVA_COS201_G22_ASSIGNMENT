@@ -36,8 +36,8 @@
 | Daniel Abiodun                 | 30153666     | daniel.abiodun1@miva.edu.ng              |
 | Ayodeji Victor Adeyanju        | 30159201     | ayodeji.victor@miva.edu.ng               |
 | Augustine Adolphus Fubara      | 30169254     | augustine.fubara@miva.edu.ng             |
-|                                |              |                                          |
-|                                |              |                                          |
+| Daniel Ugwunwa                 | 30094567     | d.ugwunwa4567@miva.edu.ng                |
+| Folorunsho Oluwatobi           | 30163916     | folorunsho.oluwatobi@miva.edu.ng         |
 
 
 

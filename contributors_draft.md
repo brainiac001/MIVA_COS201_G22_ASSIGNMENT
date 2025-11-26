@@ -14,13 +14,11 @@ This project is a Student Record System in C. The team is divided into various r
 | Raheem Mujeeb Olamilekan, Akinniyi Adeleke Solomon | Display All Students | `displayAllStudents` (format table, compute PASS/FAIL) | Cherechi Udensi, Daniel Abiodun |
 | Cherechi Udensi, Daniel Abiodun | Search Student | `searchStudent` (locate, display, not-found handling) | Ayodeji Victor Adeyanju, Augustine Adolphus Fubara |
 | Ayodeji Victor Adeyanju, Augustine Adolphus Fubara | Modify Student | `modifyStudent` (find, partial updates, preserve blanks) | Idowu Joshua Oluwadamilare, Olalere Isaiah |
-| Idowu Joshua Oluwadamilare, Raheem Mujeeb Olamilekan | Remove Student | `removeStudent` (locate, shift array, decrement count) | Cherechi Udensi, Daniel Abiodun |
-| Daniel Abiodun, Ayodeji Victor Adeyanju | Calculate Average | `calculateAverageMarks` (sum, average, display) | Raheem Mujeeb Olamilekan, Augustine Adolphus Fubara |
-| Olalere Isaiah, Augustine Adolphus Fubara | Sort Students | `sortStudents`, `compareMarks` (qsort, ascending/descending) | Idowu Joshua Oluwadamilare, Raheem Mujeeb Olamilekan |
-| Idowu Joshua Oluwadamilare, Cherechi Udensi | Save to File | `saveToFile` (CSV export, headers, pass/fail status) | Augustine Adolphus Fubara, Daniel Abiodun |
-| Raheem Mujeeb Olamilekan, Daniel Abiodun | Load from File | `loadFromFile` (CSV parsing, array resize, data population) | Olalere Isaiah, Ayodeji Victor Adeyanju |
-
-*Alt task (fallback if primary task completed early)
+| Daniel Ugwunwa, Folorunsho Oluwatobi | Remove Student | `removeStudent` (locate, shift array, decrement count) | Cherechi Udensi, Daniel Abiodun |
+| Daniel Abiodun, Ayodeji Victor Adeyanju | Calculate Average | `calculateAverageMarks` (sum, average, display) | Raheem Mujeeb Olamilekan, Daniel Ugwunwa |
+| Olalere Isaiah, Augustine Adolphus Fubara | Sort Students | `sortStudents`, `compareMarks` (qsort, ascending/descending) | Idowu Joshua Oluwadamilare, Folorunsho Oluwatobi |
+| Idowu Joshua Oluwadamilare, Cherechi Udensi | Save to File | `saveToFile` (CSV export, headers, pass/fail status) | Augustine Adolphus Fubara, Akinniyi Adeleke Solomon |
+| Akinniyi Adeleke Solomon, Folorunsho Oluwatobi | Load from File | `loadFromFile` (CSV parsing, array resize, data population) | Olalere Isaiah, Ayodeji Victor Adeyanju |
 
 ---
 
