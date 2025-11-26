@@ -331,11 +331,97 @@ void displayMenu()
     printf("----------------------------------------\n");
 }
 
-m
+/* ------------------------------------------------------------------------- */
+/* addStudent - add a new student to the record system                        */
+/* ------------------------------------------------------------------------- */
+/* 
+ * addStudent - Interactive function to add a new student record
+ * 
+ * This function handles the complete process of adding a new student:
+ * 1. Checks if we need to expand the dynamic array capacity
+ * 2. Prompts user for student name, roll number, and marks
+ * 3. Validates input (positive roll number, marks 0-100)
+ * 4. Ensures roll number uniqueness
+ * 5. Stores the new student in the array
+ * 
+ * params: records - pointer to the StudentRecordSystem containing all students
+ * returns: void (prints success/error messages to stdout)
+ */
+void addStudent(StudentRecordSystem *records) {
+    /* Check if the dynamic array is full and needs expansion.
+     * If count >= capacity, we double the capacity using realloc.
+     * This amortized growth strategy keeps operations efficient. */
+    if (records->count >= records->capacity) {
+        /* Double the capacity - common strategy for dynamic arrays.
+         * This ensures we don't realloc too frequently while keeping
+         * memory usage reasonable. */
+        records->capacity *= 2;
+        
+        /* realloc expands the existing memory block or allocates a new one
+         * and copies the old data. Returns NULL on failure, so we must check. */
+        records->students = (Student*)realloc(records->students, records->capacity * sizeof(Student));
+        if (records->students == NULL) {
+            printf("Memory allocation failed!\n");
+            return; /* Early return - cannot proceed without memory */
+        }
+    }
+    
+    /* Create a temporary Student struct to hold input data.
+     * This allows us to validate all input before adding to the array. */
+    Student newStudent;
+    
+    printf("\n--- Add New Student ---\n");
+    
+    /* Get student name using fgets for safe bounded input.
+     * fgets includes the newline if it fits, so we remove it. */
+    printf("Enter student name: ");
+    fgets(newStudent.name, sizeof(newStudent.name), stdin);
+    /* strcspn finds the first occurrence of '\n' and returns its index.
+     * We replace the newline with '\0' to properly terminate the string. */
+    newStudent.name[strcspn(newStudent.name, "\n")] = '\0';
+    
+    /* Get roll number with validation.
+     * We use a while loop to ensure we get valid input:
+     * - scanf returns 1 if successfully parsed an integer
+     * - Roll number must be positive (> 0) */
+    printf("Enter roll number: ");
+    while (scanf("%d", &newStudent.rollNumber) != 1 || newStudent.rollNumber <= 0) {
+        printf("Invalid roll number! Please enter a positive integer: ");
+        clearInputBuffer(); /* Clear invalid input to prevent infinite loop */
+    }
+    clearInputBuffer(); /* Remove the newline left by scanf */
+    
+    /* Check for duplicate roll numbers to maintain data integrity.
+     * We iterate through existing students to ensure uniqueness. */
+    for (int i = 0; i < records->count; i++) {
+        if (records->students[i].rollNumber == newStudent.rollNumber) {
+            printf("Error: Roll number %d already exists!\n", newStudent.rollNumber);
+            return; /* Early return - cannot add duplicate */
+        }
+    }
+    
+    /* Get marks with validation.
+     * Marks must be a float between 0 and 100 (inclusive). */
+    printf("Enter marks: ");
+    while (scanf("%f", &newStudent.marks) != 1 || newStudent.marks < 0 || newStudent.marks > 100) {
+        printf("Invalid marks! Please enter a value between 0 and 100: ");
+        clearInputBuffer(); /* Clear invalid input */
+    }
+    clearInputBuffer(); /* Remove the newline left by scanf */
+    
+    /* Add the validated student to the array.
+     * We place it at index 'count' (the next available slot)
+     * and then increment the count to reflect the new size. */
+    records->students[records->count] = newStudent;
+    records->count++;
+    
+    printf("Student added successfully!\n");
+}
 
 /* ------------------------------------------------------------------------- */
 /* displayAllStudents - print the stored students in a human-friendly table  */
 /* ------------------------------------------------------------------------- */
+
 void displayAllStudents(const StudentRecordSystem *records)
 {
     if (records->count == 0)
